@@ -1,7 +1,7 @@
 const UserList = ({ users }) => {
   const renderUsers = users.map((user, i) => {
     return (
-      <tr key={`user${i}`}>
+      <tr key={user.email}>
         <td>{user.name}</td>
         <td>{user.email}</td>
       </tr>

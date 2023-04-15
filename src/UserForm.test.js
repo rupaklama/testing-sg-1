@@ -7,7 +7,7 @@ describe("<UserForm />", () => {
     render(<UserForm />);
   };
 
-  // import aspect of the component
+  // import aspects of the component
   describe("layout", () => {
     it("should render Inputs initially empty", () => {
       setup();
@@ -28,7 +28,24 @@ describe("<UserForm />", () => {
   });
 
   describe("interactions", () => {
-    it("should call onUserAdd and submit form on button click", () => {
+    it("empties the two inputs when form is submitted", () => {
+      render(<UserForm onUserAdd={() => {}} />);
+
+      const nameInput = screen.getByRole("textbox", { name: /name/i });
+      userEvent.type(nameInput, "admin");
+
+      const emailInput = screen.getByRole("textbox", { name: /email/i });
+      userEvent.type(emailInput, "admin@test.com");
+
+      const buttonEl = screen.getByRole("button", { name: /add user/i });
+      userEvent.click(buttonEl);
+
+      expect(nameInput).toHaveValue("");
+      expect(emailInput).toHaveValue("");
+    });
+
+    it("should call `onUserAdd` and submit form on button click", () => {
+      // NOTE - testing 'onUserAdd' method which is a prop
       const mock = jest.fn();
 
       render(<UserForm onUserAdd={mock} />);

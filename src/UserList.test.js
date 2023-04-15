@@ -1,22 +1,22 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import UserList from "./UserList";
 
 describe("<UserList />", () => {
-  const props = [
+  const users = [
     { name: "testUser1", email: "testUser1@test.com" },
     { name: "testUser2", email: "testUser2@test.com" },
   ];
 
   const setup = () => {
-    render(<UserList users={props} />);
+    render(<UserList users={users} />);
   };
 
   describe("layout", () => {
     it("should render one row per user", () => {
       // note - avoiding data test ids
       // 'container' is the wrapper element added by testing library
-      const { container } = render(<UserList users={props} />);
+      const { container } = render(<UserList users={users} />);
 
       // note - query helper to find elements & roles
       // screen.logTestingPlaygroundURL();
@@ -35,7 +35,7 @@ describe("<UserList />", () => {
     it("should render the email and name of each user", () => {
       setup();
 
-      for (let user of props) {
+      for (let user of users) {
         const name = screen.getByRole("cell", { name: user.name });
         const email = screen.getByRole("cell", { name: user.email });
 
