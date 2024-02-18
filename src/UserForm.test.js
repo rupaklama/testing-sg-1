@@ -11,17 +11,13 @@ describe("<UserForm />", () => {
   describe("layout", () => {
     it("should render Inputs initially empty", () => {
       setup();
-
       const nameInput = screen.getByRole("textbox", { name: /name/i });
       const emailInput = screen.getByRole("textbox", { name: /email/i });
-
       expect(nameInput.value).toBe("");
       expect(emailInput.value).toBe("");
     });
-
     it("should render a Add User button", () => {
       setup();
-
       const buttonEl = screen.getByRole("button", { name: /add user/i });
       expect(buttonEl).toBeInTheDocument();
     });
@@ -29,7 +25,11 @@ describe("<UserForm />", () => {
 
   describe("interactions", () => {
     it("empties the two inputs when form is submitted", () => {
-      render(<UserForm onUserAdd={() => {}} />);
+      // NOTE - testing 'onUserAdd' method which is a prop
+      // Test input values are added into the mock function as arguments
+      const mock = jest.fn();
+
+      render(<UserForm onUserAdd={mock} />);
 
       const nameInput = screen.getByRole("textbox", { name: /name/i });
       userEvent.type(nameInput, "admin");
@@ -45,7 +45,6 @@ describe("<UserForm />", () => {
     });
 
     it("should call `onUserAdd` and submit form on button click", () => {
-      // NOTE - testing 'onUserAdd' method which is a prop
       const mock = jest.fn();
 
       render(<UserForm onUserAdd={mock} />);

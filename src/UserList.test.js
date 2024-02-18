@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import UserList from "./UserList";
 
@@ -15,17 +15,22 @@ describe("<UserList />", () => {
   describe("layout", () => {
     it("should render one row per user", () => {
       // note - avoiding data test ids
-      // 'container' is the wrapper element added by testing library
+      // 'container' is the wrapper element 'div' added by testing library
       const { container } = render(<UserList users={users} />);
 
       // note - query helper to find elements & roles
-      // screen.logTestingPlaygroundURL();
+      // eslint-disable-next-line testing-library/no-debugging-utils
+      screen.logTestingPlaygroundURL();
       // const rows = screen.getAllByRole("cell");
-      // expect(rows).toHaveLength(4);
+      // expect(rows).toHaveLength(2); - issues here
 
-      // note - within function look up inside of given element only
+      // note: two ways to solve issues above
+
+      // note - within function looks up inside of 'given element' only with 'data-testid' attribute
       // const rows = within(screen.getByTestId("users")).getAllByRole("row");
+      // expect(rows).toHaveLength(2);
 
+      // note - good approach here since we don't have to modify the component with data-testid
       // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
       const rows = container.querySelectorAll("tbody tr");
 
